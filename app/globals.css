@@ -4,7 +4,7 @@
 
 /* base styles */
 body {
-  background: #ebf0fa;
+  background: #fff;
   @apply text-gray-500 m-8;
 }
 h1, h2 {
@@ -51,10 +51,14 @@ button:hover {
   @apply bg-opacity-90;
 }
 .btn-primary {
-  @apply bg-primary text-white;
+  @apply bg-primary text-white mx-2;
 }
 .btn-secondary {
-  @apply bg-gray-200 text-gray-900;
+  @apply bg-gray-200 text-gray-900 mx-2;
+}
+
+.title {
+  @apply text-xl
 }
 
 /* form styles */
@@ -136,4 +140,8 @@ form button {
   @apply 
     absolute bottom-0 right-0 
     rounded-tl-md;
+}
+.card .closebutton {
+  @apply
+    absolute bottom-0 w-full text-center p-2
 }

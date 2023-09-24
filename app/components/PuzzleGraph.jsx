@@ -3,16 +3,17 @@ import { motion } from 'framer-motion'
 
 import { getEdges } from '../utils/helpers'
 
-export default function PuzzleGraph({initialNodeList, initialEdges, spinnerColor, setSpinCount}) {
-    const [graphNodes, setGraphNodes] = useState(initialNodeList)
-    const [allEdges, setAllEdges] = useState([])
-    useEffect(() => {
-        setAllEdges(getEdges(initialNodeList, initialEdges))
+export default function PuzzleGraph({graphNodes, setGraphNodes, initialEdges, spinnerColor, setSpinCount, allEdges, gameOver}) {
+    // const [allEdges, setAllEdges] = useState([])
+    // useEffect(() => {
+    //     setAllEdges(getEdges(initialNodeList, initialEdges))
 
-    }, [initialNodeList, initialEdges])
+    // }, [initialNodeList, initialEdges])
 
     // clicking a node makes it that color, and clears neighbors with that color 
     const handleClick = (nodeId) => {
+        if (gameOver) return
+        
         setGraphNodes(oldNodes => (
             oldNodes.map(node =>  {
                 if (node.id === nodeId) {
@@ -36,7 +37,7 @@ export default function PuzzleGraph({initialNodeList, initialEdges, spinnerColor
     }
 
     return (
-        <svg style={{width: 500, height: 500}} viewBox="0 0 500 500">
+        <svg style={{width: '80%', height: '80%', maxWidth:500}} viewBox="0 0 300 300">
             ...{allEdges}
             {graphNodes.map((gn) => (
                 <GraphNode 
@@ -56,6 +57,7 @@ export default function PuzzleGraph({initialNodeList, initialEdges, spinnerColor
 
 function GraphNode({corX, corY, color, id, handleClick}){
     const nodeClick = () => {
+        
         // only allow change to empty node
         if (color === 'white') {
             handleClick(id)
@@ -67,7 +69,8 @@ function GraphNode({corX, corY, color, id, handleClick}){
         cx={50+100*corX} 
         cy={50+100*corY}
         style={{stroke: 'black', strokeWidth: 3}} 
-        animate={{fill: color}} 
+        fill={color}
+        // animate={{fill: color}} 
         r={20} 
         id={id}
         onClick={nodeClick}

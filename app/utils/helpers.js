@@ -19,4 +19,36 @@ const getEdges = (nodelist, edgelist) => {
     return edges 
 }
 
-export { corToPos, getEdges}
+const makeHeadline = (finalscore, par) => {
+    const scoreDiff = finalscore - par 
+    if (scoreDiff < -3) return "I'm sorry, what?"
+    if (scoreDiff === -3) return "Double Eagle!"
+    if (scoreDiff === -2) return "Eagle!"
+    if (scoreDiff === -1) return "Birdie!"
+    if (scoreDiff === 0) return "Par!"
+    if (scoreDiff === 1) return "Bogey!"
+    if (scoreDiff === 2) return "Double Bogey!"
+    if (scoreDiff === 3) return "Triple Bogy!"
+    if (scoreDiff > 3) return "Oof."
+    return "Huh..."
+
+}
+
+const makeMessage = (finalscore, par, optimum) => {
+    if (finalscore < optimum) {
+        return {message: "Better than I thought was possible! Or maybe there's a bug in the game.", giveRetry: false}
+    }
+    if (finalscore === optimum) {
+        return {message: "That's the optimal score!", giveRetry: false}
+    }
+    if (finalscore < par) {
+        return {message: `Great job! This puzzle can actually be solved in ${optimum} moves.`, giveRetry: true}
+    }
+    if (finalscore === par || finalscore === par+1){
+        return {message: `Not bad! This puzzle can actually be solved in ${optimum} moves.`, giveRetry: true}
+    }
+    return {message: `Not great... This puzzle can actually be solved in ${optimum} moves.`, giveRetry: true}
+
+}
+
+export { corToPos, getEdges, makeMessage, makeHeadline}
